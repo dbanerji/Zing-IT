@@ -12,4 +12,4 @@ class Song(models.Model):
     artist = models.CharField(unique= True,max_length=255)
     album = models.CharField(max_length=255)
     length = models.CharField(max_length=255)
-    playlist_id = models.ForeignKey(Playlist, on_delete=models.CASCADE)
+    playlist_name= models.ManyToManyField('Playlist')
