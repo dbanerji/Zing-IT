@@ -1,0 +1,23 @@
+{% extends "zing_it/base.html" %}
+{% block css %} <link rel="stylesheet" href= "{% static 'zing_it/css/songs.css' %}"/> {% endblock %}
+{% block title %} <title> Signup form </title> {% endblock %}
+{% block heading %}
+<center>Signup</center>
+{% endblock %}
+{% block content %}
+
+<form method="POST">
+    {% csrf_token %}
+    <table>
+        {{form.as_table}}
+    </table>
+    
+    <input type="submit" value="signup">
+
+</form>
+<br>
+<b><span>{{status}}</span></b>
+{% endblock %}
+
+
+
