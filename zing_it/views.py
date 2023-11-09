@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from django.http import Http404, HttpResponse
 import datetime
+from django.views.decorators.csrf import csrf_exempt
 
 from .forms import Signup
+from .forms import Login
 
 # Create your views here.
 
@@ -42,6 +44,10 @@ def playlist(request,id):
         raise Http404("Such playlist does not exist")
     return render(request,'zing_it/songs.html',{"songs":songs,"playlist_nm":playlist_nm})
 
+users = [
+            {"id": 1, "full_name": "john", "email": "john123@gmail.com", "password": "adminpass"},
+        ]
+@csrf_exempt
 def signup(request):
     form = Signup(request.POST or None)
     status = " "
@@ -53,3 +59,16 @@ def signup(request):
         else:
             status = "No match!"
     return render(request,'zing_it/signup.html',{"form":form,"status":status})
+@csrf_exempt
+def login(request):
+    login_form = Login(request.POST or None)
+    status = " "
+    if login_form.is_valid():
+        email = login_form.cleaned_data.get("email")
+        password = login_form.cleaned_data.get("password")
+        user = next((user for user in users if user["email"]== email and user["password"]==password),None)
+        if user:
+            status = "Successfully logged in!"
+        else:
+            status = "Wrong Credentials!"
+    return render(request,'zing_it/login.html',{"login_form":login_form, "status":status})
