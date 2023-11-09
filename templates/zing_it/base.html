@@ -5,10 +5,21 @@
         {% block css %}{% endblock %}
         <title>{% block title %} {% endblock %}</title>
     </head>
-    <body>{% block body %} {% endblock %}</body>
+    <body>
+        <div>
+            <ul style="list-style-type: none;float: right; font-size: large;">
+                <li style="display: inline"><a href="{% url 'home' %}">Home</a></li>
+                <li style="display: inline"><a href="{% url 'signup' %}">Sign Up</a></li>
+                {% if status == "Successfully logged in!" %}
+                <li style="display:inline"><a href="{% url 'home'%}">Logout</a></li>
+                {% else %}
+                <li style="display:inline"><a href="{% url 'login' %}">Login</a></li>
+                {% endif %}
+            </ul>
+        </div>
         <h1 id="title"> {% block heading%} {% endblock %}</h1>
         <div id="content">{% block content %}{% endblock %}</div>
-</body>
+    </body>
 </html>
 
 
