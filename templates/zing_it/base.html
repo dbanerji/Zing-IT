@@ -11,7 +11,7 @@
                 <li style="display: inline"><a href="{% url 'home' %}">Home</a></li>
                 <li style="display: inline"><a href="{% url 'signup' %}">Sign Up</a></li>
                 {% if status == "Successfully logged in!" %}
-                <li style="display:inline"><a href="{% url 'home'%}">Logout</a></li>
+                <li style="display:inline"><a href="{% url 'home'%}">Home</a></li>
                 {% else %}
                 <li style="display:inline"><a href="{% url 'login' %}">Login</a></li>
                 {% endif %}

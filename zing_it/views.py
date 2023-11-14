@@ -5,7 +5,8 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .forms import Signup
 from .forms import Login
-
+from django.contrib.auth.models import User
+from django.contrib import auth
 # Create your views here.
 
 my_playlists=[
@@ -50,23 +51,31 @@ users = [
 @csrf_exempt
 def signup(request):
     form = Signup(request.POST or None)
-    status = " "
     if form.is_valid():
         password = form.cleaned_data.get("password")
         confirm_password = form.cleaned_data.get("confirm_password")
+        email = form.cleaned_data.get("email")
+        name = form.cleaned_data.get("full_name")   
         if password != confirm_password:
-            status = "Passwords match! :)"
+            return render(request,"zing_it/signup.html",{"form":form,"status":"Your passwords dont match"})
         else:
-            status = "No match!"
-    return render(request,'zing_it/signup.html',{"form":form,"status":status})
+            try:
+                user = User.objects.get(email=email)
+                return render(request,"zing_it/signup.html",{"form":form,"status":"This email already exists in the system! Please log in instead"})
+            except Exception as e:
+                print(e)
+                new_user = User.objects.create_user(username=name,email=email,password=password)
+                new_user.save()
+                return render(request,'zing_it/signup.html',{"form":form,"status":"signed up succeessfully!"})
+    return render(request,"zing_it/signup.html",{"form":form})
 @csrf_exempt
 def login(request):
     login_form = Login(request.POST or None)
     status = " "
     if login_form.is_valid():
-        email = login_form.cleaned_data.get("email")
+        username = login_form.cleaned_data.get("username")
         password = login_form.cleaned_data.get("password")
-        user = next((user for user in users if user["email"]== email and user["password"]==password),None)
+        user = auth.authenticate(username=username,password=password)
         if user:
             status = "Successfully logged in!"
         else:
