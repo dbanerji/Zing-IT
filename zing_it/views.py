@@ -6,6 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .forms import Signup
 from .forms import Login
 from django.contrib.auth.models import User
+from .models import Song, Playlist
 from django.contrib import auth
 # Create your views here.
 
@@ -23,10 +24,35 @@ my_songs = [
     ]
 
 def home(request):
+    
     return render(request,'zing_it/home.html',{"my_playlist":my_playlists})
 
 
 def about(request):
+
+    try:
+        thankyou_next= Song.objects.create(track="thank u, next",artist="Ariana Grande",album="thank u, next",length="3:27",playlist_id=1)
+        one_kiss_next= Song.objects.create(track="One Kiss, next",artist="Dua Lipa, Calvin Harris",album="One Kiss",length="3:34",playlist_id=1)
+        better_now= Song.objects.create(track="Better Now",artist="Post malone",album="beerbongs & bentleys",length="3:51",playlist_id=1)
+        the_middle= Song.objects.create(track="The Middle",artist="Grey,Marren Morris, ZEDD",album="The Middle",length="3:04",playlist_id=1)
+        love_lies= Song.objects.create(track="Love Lies",artist="Normani, Khalid",album="Love Lies",length="3:21",playlist_id=2)
+        rise= Song.objects.create(track="Rise",artist="Jack & Jack, Jonas Blue",album="Blue",length="3:14",playlist_id=2)
+
+        car_playlist = Playlist.objects.create(name="Car Playlist",numberOfSongs=4)
+        coding_playlist = Playlist.objects.create(name="Coding Playlist",numberOfSongs=2)
+
+    
+        thankyou_next.save()
+        one_kiss_next.save()
+        better_now.save()
+        the_middle.save()
+        love_lies.save()
+        rise.save()
+        car_playlist.save()
+        coding_playlist.save()
+    except Exception as e: 
+        print(e)
+
     return HttpResponse("""<h1>About Us:</h1><p>With Zing, you can easily find the music of your choice and easily share it with other people. You can also browse through the collections of friends, artists, and celebrities, or create a playlist of your own.
       Soundtrack your life with Zing. Subscribe or listen for free.</p>""")
 

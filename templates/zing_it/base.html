@@ -9,6 +9,7 @@
         <div>
             <ul style="list-style-type: none;float: right; font-size: large;">
                 <li style="display: inline"><a href="{% url 'home' %}">Home</a></li>
+                <li style="display:inline"><a href="{% url 'about' %}">About</a></li>
                 <li style="display: inline"><a href="{% url 'signup' %}">Sign Up</a></li>
                 {% if status == "Successfully logged in!" %}
                 <li style="display:inline"><a href="{% url 'home'%}">Home</a></li>
