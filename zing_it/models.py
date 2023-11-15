@@ -6,7 +6,7 @@ class Playlist(models.Model):
     numberOfSongs = models.IntegerField()
 
 class Song(models.Model):
-    track = models.CharField(max_length=255)
+    track = models.CharField(max_length=255,unique=True)
     artist = models.CharField(max_length=255)
     album = models.CharField(max_length=255)
     length = models.CharField(max_length=255)

@@ -24,8 +24,8 @@ my_songs = [
     ]
 
 def home(request):
-    
-    return render(request,'zing_it/home.html',{"my_playlist":my_playlists})
+    playlists = Playlist.objects.all()
+    return render(request,'zing_it/home.html',{"my_playlist":playlists})
 
 
 def about(request):
@@ -60,15 +60,18 @@ def playlist(request,id):
 
     songs=[]
     playlist_nm=''
-    for song in my_songs:
-        if(id == song["playlist_id"]):
-            songs.append(song)
-    for playlist in my_playlists:
-        if (id == playlist["id"]):
-            playlist_nm=playlist["name"]
+    playlist=Playlist.objects.get(pk=id)
+    playlist_nm = playlist.name
 
     if len(playlist_nm)==0:
         raise Http404("Such playlist does not exist")
+    
+    all_songs = Song.objects.all()
+    
+    for song in all_songs:
+        if (id == song.playlist_id):
+            songs.append(song)
+                
     return render(request,'zing_it/songs.html',{"songs":songs,"playlist_nm":playlist_nm})
 
 users = [

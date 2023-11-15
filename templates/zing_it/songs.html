@@ -1,17 +1,16 @@
 {% extends "zing_it/base.html" %}
+
 {% load static %}
-{% block css %} <link rel="stylesheet" href= "{% static 'zing_it/css/songs.css' %}"/> {% endblock %}
-{% block title %}
-    <title>Songs Page</title>
+
+{% block css %} <link rel="stylesheet" href= "{% static 'zing_it/css/songs.css' %}"/> {% endblock %} 
+    
+{% block title %} Songs Page {% endblock %}
+
+{% block heading %}
+<center>{{ playlist_name }}</center>
 {% endblock %}
 
-
-{% block heading %} <h1>
-  <h1><center>{{playlist_nm}}</center></h1> {% endblock %}
-
-{% block content %}
-
-    
+{% block content%}
     <table>
         <tr>
           <th>No.</th>
@@ -20,15 +19,15 @@
           <th>Album</th>
           <th>Length</th>
         </tr>
-        
-        {% for song in songs %}
+        {% for song in songs  %}
         <tr>
-          <td>{{forloop.counter}}</td>
-          <td>{{song.Track}}</td>
-          <td>{{song.Artist}}</td>
-          <td>{{song.Album}}</td>
-          <td>{{song.Length}}</td>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ song.track }}</td>
+          <td>{{ song.artist }}</td>
+          <td>{{ song.album }}</td>
+          <td>{{ song.length }}</td>
         </tr>
         {% endfor %}
       </table>
+
 {% endblock %}
